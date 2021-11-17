@@ -1,21 +1,60 @@
 {
-  "name": "headsup",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "worldwide-routing",
+  "version": "0.2.0",
+  "description": "Using React Router to navigate the globe",
+  "repository": "https://github.com/dev-academy-challenges/worldwide-routing.git",
+  "main": "server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon index"
+    "start": "run-p webpack server",
+    "dev": "run-p client server",
+    "webpack": "webpack",
+    "client": "webpack --watch",
+    "server": "node server",
+    "test": "jest --watch --noStackTrace",
+    "lint": "eslint --ext .js,.jsx ."
   },
-  "author": "",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "eda",
+    "ignorePatterns": [
+      "bundle.js"
+    ]
+  },
+  "author": "EDA",
   "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "eslint": "7.9.0",
+    "eslint-config-eda": "0.1.4",
+    "jest": "^26.6.3",
+    "npm-run-all": "^4.1.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.3.0",
+    "webpack": "^5.12.1",
+    "webpack-cli": "^4.3.1"
+  },
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.4",
-    "handlebars": "^4.7.7",
-    "knex": "^0.95.12",
-    "nodemon": "^2.0.14",
-    "sqlite3": "^5.0.2"
+    "knex": "^0.95.14",
+    "react-redux": "^7.2.6",
+    "react-router": "^6.0.2",
+    "redux-thunk": "^2.4.0",
+    "sqlite3": "^5.0.2",
+    "superagent": "^6.1.0"
   }
 }

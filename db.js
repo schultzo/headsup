@@ -6,21 +6,17 @@ const connection = require('knex')(config)
 
 
 function createNewHeadsUp(data, db = connection) {
+  return db('heads')
+  .insert(data)
+}
 
-    console.log(data)
-    db('heads').insert(data)
 
-        .then(insertComplete => {
-            console.log(insertComplete)
-            return insertComplete
-        }
-        )
+function displayAllHeadsUp(db = connection) {
+   return db('heads')
 }
 
 
 module.exports = {
-    createNewHeadsUp
+    createNewHeadsUp,
+    displayAllHeadsUp
 }
-
-
-//what to do
