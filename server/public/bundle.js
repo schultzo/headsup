@@ -10,19 +10,31 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ addHeads),
+/* harmony export */   "viewHeads": () => (/* binding */ viewHeads)
 /* harmony export */ });
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api */ "./client/api.js");
 //In here there will be a function (action) to add a headsup. It will call a function from the API file. 
  //Thunks
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (addHeads = function addHeads(headData) {
+function addHeads(headData) {
   return function (dispatch) {
-    (0,_api__WEBPACK_IMPORTED_MODULE_0__["default"])(headData).then(function (newId) {
+    (0,_api__WEBPACK_IMPORTED_MODULE_0__.postHead)(headData).then(function (newId) {
       console.log(newId);
+    })["catch"](function (error) {
+      return console.log(error.message);
     });
   };
-});
+}
+function viewHeads() {
+  return null; // return (dispatch) => {
+  //     fetchAllHeads()
+  //     .then((response) => {
+  //         console.log(response)
+  //     })
+  //     .catch(error => console.log(error.message))
+  // }
+}
 
 /***/ }),
 
@@ -35,23 +47,25 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ postHead)
+/* harmony export */   "fetchAllHeads": () => (/* binding */ fetchAllHeads),
+/* harmony export */   "postHead": () => (/* binding */ postHead)
 /* harmony export */ });
 /* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! superagent */ "./node_modules/superagent/lib/client.js");
 /* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(superagent__WEBPACK_IMPORTED_MODULE_0__);
 //In here there will be a post to a route. Superagent is used here. It passes the data over the internet and when it hits server.js it will figure 
 //out what to do with this
- // export function fetchAllHeads () {
-//     const headsUpData = {
-//         key: "value"
-//     }
-//   return headsUpData
-//     // .catch()
-// }
 
+function fetchAllHeads() {
+  var headsUpData = {
+    key: "value"
+  };
+  return headsUpData; // .catch()
+}
 function postHead(headData) {
+  console.log('api request', headData);
   return superagent__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/heads').send(headData).then(function (res) {
-    return res.body.newId;
+    console.log('api response', res.body);
+    res.body.newId;
   });
 }
 
@@ -119,10 +133,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
+ //import viewHeads from '../api'
 
-
-function home(props) {
-  console.log(props);
+function home() {
+  //   useEffect(()=>{
+  // viewHeads()
+  //   })
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
     className: "homepage-title"
   }, "HEADS UP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -195,8 +211,9 @@ function newHeads() {
       setFormData = _useState2[1];
 
   var submitHandler = function submitHandler(e) {
-    e.preventDefault();
+    console.log("test");
     console.log(formData);
+    e.preventDefault();
     dispatch((0,_actions_index__WEBPACK_IMPORTED_MODULE_1__["default"])(formData)); //Call function action from action.js
   };
 
@@ -243,10 +260,10 @@ function newHeads() {
 
 /***/ }),
 
-/***/ "./reducers/headsReducers.js":
-/*!***********************************!*\
-  !*** ./reducers/headsReducers.js ***!
-  \***********************************/
+/***/ "./client/reducers/headsReducers.js":
+/*!******************************************!*\
+  !*** ./client/reducers/headsReducers.js ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -42275,7 +42292,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
-/* harmony import */ var _reducers_headsReducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/headsReducers */ "./reducers/headsReducers.js");
+/* harmony import */ var _reducers_headsReducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reducers/headsReducers */ "./client/reducers/headsReducers.js");
 /* harmony import */ var _components_app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/app */ "./client/components/app.jsx");
 
 

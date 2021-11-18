@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Switch, Link } from 'react-router-dom'
+//import viewHeads from '../api'
+
+function home () {
+ 
 
 
-function home (props) {
-  console.log(props)
+//   useEffect(()=>{
+// viewHeads()
+//   })
   return (
     <>
 

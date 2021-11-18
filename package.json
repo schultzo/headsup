@@ -6,10 +6,11 @@
   "main": "server/index.js",
   "scripts": {
     "start": "run-p webpack server",
-    "dev": "run-p client server",
+    "dev": "run-p client server:dev",
     "webpack": "webpack",
     "client": "webpack --watch",
     "server": "node server",
+    "server:dev": "nodemon server",
     "test": "jest --watch --noStackTrace",
     "lint": "eslint --ext .js,.jsx ."
   },

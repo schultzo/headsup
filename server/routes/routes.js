@@ -2,21 +2,19 @@
 
 
 const express = require('express')
-const app = express()
-const db = require('../db')
+const db = require('../db/db')
 
 const router = express.Router()
 
-// app.use(express.urlencoded({extended: false}))
-
-app.post('/', (req, res) => {
+router.post('/', (req, res) => {
      const data = req.body
+     console.log('route', req.body)
     return db.createNewHeadsUp(data)
     .then(postId => {
         res.json(postId)
         return null
        })
-console.log("Something happened")  })
+  })
 
 
 module.exports = router

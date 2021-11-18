@@ -15,12 +15,16 @@ const dispatch = useDispatch()
 const [formData, setFormData] = useState(1)
 
 const submitHandler  = (e) => {
-  e.preventDefault()
+  console.log("test")
   console.log(formData)
+  e.preventDefault()
   dispatch(addHeads(formData))
   //Call function action from action.js
   
 }
+
+
+
 
 const onChangeHandler = (e) => {
   setFormData({

@@ -3,16 +3,18 @@
 import request from 'superagent'
 
 
-// export function fetchAllHeads () {
-//     const headsUpData = {
-//         key: "value"
-//     }
-//   return headsUpData
-//     // .catch()
-// }
+export function fetchAllHeads () {
+    const headsUpData = {
+        key: "value"
+    }
+  return headsUpData
+    // .catch()
+}
 
-export default function postHead (headData) {
+export function postHead (headData) {
+    console.log('api request', headData)
     return request.post('/api/v1/heads')
     .send(headData)
-    .then(res => res.body.newId)
+    .then(res => { console.log('api response', res.body)
+        res.body.newId})
 }
