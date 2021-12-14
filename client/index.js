@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-import headsreducers from './reducers/headsReducers'
+import headsreducers from './reducers'
 import App from "./components/app"
 
 

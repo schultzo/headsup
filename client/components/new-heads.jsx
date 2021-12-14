@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import addHeads from '../actions/index'
+import {addHeads} from '../actions/index'
 import { useDispatch } from 'react-redux'
 
 
@@ -12,18 +12,14 @@ import { useDispatch } from 'react-redux'
 
 function newHeads () {
 const dispatch = useDispatch()
-const [formData, setFormData] = useState(1)
+const [formData, setFormData] = useState()
 
 const submitHandler  = (e) => {
-  console.log("test")
-  console.log(formData)
   e.preventDefault()
   dispatch(addHeads(formData))
   //Call function action from action.js
   
 }
-
-
 
 
 const onChangeHandler = (e) => {
@@ -38,7 +34,7 @@ const onChangeHandler = (e) => {
 
 <div  className="main-home-div">
 
-<form onSubmit={submitHandler}>
+<form className="head-form" onSubmit={submitHandler}>
   <label htmlFor="">Summary</label>
   <input onChange={onChangeHandler} name="summary" type="text"/>
 
@@ -53,6 +49,7 @@ const onChangeHandler = (e) => {
 
 <label htmlFor="Location">Location</label>
 <input onChange={onChangeHandler} type="location" name="location" id=""/>
+<br />
 
 
 

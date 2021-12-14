@@ -17,4 +17,17 @@ router.post('/', (req, res) => {
   })
 
 
+router.get('/', (req, res)=> {
+     return db.displayAllHeadsUp()
+     .then (
+          results => {
+          res.json(results)
+          return null
+     })
+
+
+
+})
+
+
 module.exports = router

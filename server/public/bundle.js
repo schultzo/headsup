@@ -10,12 +10,22 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ addHeads),
+/* harmony export */   "saveHeads": () => (/* binding */ saveHeads),
+/* harmony export */   "addHeads": () => (/* binding */ addHeads),
 /* harmony export */   "viewHeads": () => (/* binding */ viewHeads)
 /* harmony export */ });
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api */ "./client/api.js");
 //In here there will be a function (action) to add a headsup. It will call a function from the API file. 
- //Thunks
+
+ //actions
+
+function saveHeads(heads) {
+  // console.log(heads.body)
+  return {
+    type: "SAVE_ALL_HEADS",
+    heads: heads.body
+  };
+} //Thunks
 
 function addHeads(headData) {
   return function (dispatch) {
@@ -27,13 +37,14 @@ function addHeads(headData) {
   };
 }
 function viewHeads() {
-  return null; // return (dispatch) => {
-  //     fetchAllHeads()
-  //     .then((response) => {
-  //         console.log(response)
-  //     })
-  //     .catch(error => console.log(error.message))
-  // }
+  return function (dispatch) {
+    (0,_api__WEBPACK_IMPORTED_MODULE_0__.fetchAllHeads)().then(function (heads) {
+      var action = saveHeads(heads);
+      dispatch(action);
+    })["catch"](function (error) {
+      return console.log(error.message);
+    });
+  };
 }
 
 /***/ }),
@@ -56,13 +67,10 @@ __webpack_require__.r(__webpack_exports__);
 //out what to do with this
 
 function fetchAllHeads() {
-  var headsUpData = {
-    key: "value"
-  };
-  return headsUpData; // .catch()
+  return superagent__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/heads').then();
 }
 function postHead(headData) {
-  console.log('api request', headData);
+  // console.log('api request', headData)
   return superagent__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/heads').send(headData).then(function (res) {
     console.log('api response', res.body);
     res.body.newId;
@@ -97,16 +105,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function App() {
-  // const [heads, setHeads] = useState()
-  // useEffect(() => {
-  //   getAllHeads()
-  // }, [])
-  // const getAllHeads = () => {
-  //   return fetchAllHeads()
-  //   .then(heads => 
-  //     setHeads(heads)
-  //     )
-  // }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
     path: "/create",
     component: _new_heads__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -131,14 +129,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions */ "./client/actions/index.js");
 
- //import viewHeads from '../api'
+
+
+
+
 
 function home() {
-  //   useEffect(()=>{
-  // viewHeads()
-  //   })
+  var headData = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (redux) {
+    return redux.heads;
+  });
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    dispatch((0,_actions__WEBPACK_IMPORTED_MODULE_2__.viewHeads)());
+  }, []);
+  console.log("thisi si head adata" + headData);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
     className: "homepage-title"
   }, "HEADS UP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -151,9 +159,11 @@ function home() {
     alt: ""
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "list-of-heads-ups"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, "test 1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, "test 2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, "test 3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, "test 4")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, headData.id), headData.map(function (head) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, head.summary);
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "create-button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/create"
   }, " Raise a Heads Up")))));
 }
@@ -205,16 +215,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function newHeads() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
       _useState2 = _slicedToArray(_useState, 2),
       formData = _useState2[0],
       setFormData = _useState2[1];
 
   var submitHandler = function submitHandler(e) {
-    console.log("test");
-    console.log(formData);
     e.preventDefault();
-    dispatch((0,_actions_index__WEBPACK_IMPORTED_MODULE_1__["default"])(formData)); //Call function action from action.js
+    dispatch((0,_actions_index__WEBPACK_IMPORTED_MODULE_1__.addHeads)(formData)); //Call function action from action.js
   };
 
   var onChangeHandler = function onChangeHandler(e) {
@@ -224,6 +232,7 @@ function newHeads() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "main-home-div"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    className: "head-form",
     onSubmit: submitHandler
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
     htmlFor: ""
@@ -250,7 +259,7 @@ function newHeads() {
     type: "location",
     name: "location",
     id: ""
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     type: "submit",
     href: "/"
   }, "Create"))));
@@ -274,10 +283,11 @@ __webpack_require__.r(__webpack_exports__);
 function headsReducers() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  console.log(action.heads);
 
   switch (action.type) {
-    case "RECEIVE_POSTS":
-      return action.posts;
+    case "SAVE_ALL_HEADS":
+      return action.heads;
 
     default:
       return state;
@@ -285,6 +295,28 @@ function headsReducers() {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (headsReducers);
+
+/***/ }),
+
+/***/ "./client/reducers/index.js":
+/*!**********************************!*\
+  !*** ./client/reducers/index.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _headsReducers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./headsReducers */ "./client/reducers/headsReducers.js");
+
+
+var reducer = (0,redux__WEBPACK_IMPORTED_MODULE_1__.combineReducers)({
+  heads: _headsReducers__WEBPACK_IMPORTED_MODULE_0__["default"]
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer);
 
 /***/ }),
 
@@ -42292,7 +42324,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
-/* harmony import */ var _reducers_headsReducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reducers/headsReducers */ "./client/reducers/headsReducers.js");
+/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reducers */ "./client/reducers/index.js");
 /* harmony import */ var _components_app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/app */ "./client/components/app.jsx");
 
 
@@ -42304,7 +42336,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || redux__WEBPACK_IMPORTED_MODULE_5__.compose;
-var store = (0,redux__WEBPACK_IMPORTED_MODULE_5__.createStore)(_reducers_headsReducers__WEBPACK_IMPORTED_MODULE_3__["default"], composeEnhancers((0,redux__WEBPACK_IMPORTED_MODULE_5__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_6__["default"])));
+var store = (0,redux__WEBPACK_IMPORTED_MODULE_5__.createStore)(_reducers__WEBPACK_IMPORTED_MODULE_3__["default"], composeEnhancers((0,redux__WEBPACK_IMPORTED_MODULE_5__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_6__["default"])));
 document.addEventListener('DOMContentLoaded', function () {
   (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.render)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
     store: store

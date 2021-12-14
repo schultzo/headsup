@@ -1,8 +1,9 @@
 
 function headsReducers (state = [], action) {
+  console.log(action.heads)
   switch (action.type) {
-    case "RECEIVE_POSTS":
-      return action.posts
+    case "SAVE_ALL_HEADS":
+      return action.heads
       
 
     default:

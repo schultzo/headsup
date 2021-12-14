@@ -75,3 +75,20 @@ a {
     right:    0px;
     bottom:   0px;
 }
+
+
+
+/* New Head Form */
+
+
+.head-form{
+    width: 100%;
+    display: grid;
+    margin: 20px;
+    grid-template-columns: 100%;
+}
+
+input, select, button{
+    border-radius: 20px;
+}
+

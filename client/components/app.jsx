@@ -12,20 +12,6 @@ import { Provider } from 'react-redux'
 
 function App () {
 
-  // const [heads, setHeads] = useState()
-
-
-  // useEffect(() => {
-  //   getAllHeads()
-  
-  // }, [])
-
-  // const getAllHeads = () => {
-  //   return fetchAllHeads()
-  //   .then(heads => 
-  //     setHeads(heads)
-  //     )
-  // }
 
   return (
 

@@ -1,14 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Switch, Link } from 'react-router-dom'
-//import viewHeads from '../api'
+import { useDispatch } from 'react-redux'
+import {viewHeads} from '../actions'
+import { useSelector } from 'react-redux'
+
+
 
 function home () {
- 
 
 
-//   useEffect(()=>{
-// viewHeads()
-//   })
+  const headData = useSelector(redux => redux.heads)
+  
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+
+    dispatch(viewHeads())
+
+    }
+  , [])
+
+
+console.log("thisi si head adata" + headData)
+
+  
+
   return (
     <>
 
@@ -24,11 +41,13 @@ function home () {
   <img className="map-image" src="images/placeholdermap.png" alt=""/>
 
   <div className="list-of-heads-ups">
+    
     <ul>    
-        <li>test 1</li>
-        <li>test 2</li>
-        <li>test 3</li>
-        <li>test 4</li>
+      <li>{headData.id}</li> 
+      {headData.map(head => 
+       <li>{head.summary}</li> 
+      )}
+ 
     </ul>
       <button className="create-button"><Link to="/create" > Raise a Heads Up</Link></button>
   </div>
